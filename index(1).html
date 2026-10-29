@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Buffed Suvivers – WoW Gilde</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#b3121b;--darkred:#7c0d13;--gold:#ffcf6b;--orange:#ff8a72;--bg:#120404}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:#f3e2c7;line-height:1.6}
+a{color:var(--orange)}
+header{min-height:65vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:70px 20px;background:linear-gradient(180deg,rgba(120,15,15,.88),rgba(20,4,4,.97)),radial-gradient(circle at 50% 20%,#8d1616,#1a0505 70%);border-bottom:4px solid var(--red)}
+h1{font-size:clamp(2.2rem,7vw,4.5rem);color:var(--gold);text-shadow:0 0 25px rgba(255,80,40,.65);letter-spacing:2px}
+header p{margin-top:14px;font-size:1.2rem;color:#f7d9b0;max-width:750px}
+.btn{display:inline-block;margin-top:25px;padding:14px 30px;background:linear-gradient(180deg,#d3232c,#7c0d13);color:#ffe9b0;text-decoration:none;font-weight:bold;border:2px solid var(--gold);border-radius:8px;box-shadow:0 0 18px rgba(211,35,44,.55);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(255,80,40,.8)}
+nav{position:sticky;top:0;z-index:20;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:12px;background:rgba(18,4,4,.96);border-bottom:2px solid var(--darkred)}
+nav a{color:var(--gold);text-decoration:none;padding:8px 15px;border:1px solid var(--darkred);border-radius:6px;font-size:.95rem}
+nav a:hover{background:var(--red);color:#fff}
+main{max-width:1100px;margin:0 auto;padding:40px 20px}
+section{background:linear-gradient(180deg,rgba(48,9,9,.92),rgba(20,4,4,.96));border:1px solid var(--darkred);border-radius:14px;padding:32px;margin-bottom:30px;box-shadow:0 0 30px rgba(0,0,0,.55)}
+h2{color:var(--gold);margin-bottom:18px;border-bottom:2px solid var(--darkred);padding-bottom:10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.card{background:rgba(95,16,16,.35);border:1px solid #a3161d;border-radius:12px;padding:22px}
+.card h3{color:var(--orange);margin-bottom:8px}
+ul{padding-left:22px}
+
+/* Charaktere */
+.chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+.char{position:relative;border-radius:14px;overflow:hidden;border:2px solid #a3161d;background:linear-gradient(180deg,#3d0808,#170303);min-height:330px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 10px 25px rgba(0,0,0,.55)}
+.char img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72;transition:.35s}
+.char:hover img{opacity:.95;transform:scale(1.05)}
+.char-info{position:relative;z-index:2;padding:18px;background:linear-gradient(180deg,transparent,rgba(10,2,2,.95) 55%)}
+.char-info h3{color:var(--gold);font-size:1.25rem}
+.char-info span{display:block;color:#ffb3a6;font-size:.9rem;margin-top:4px}
+
+/* Kalender */
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-top button{background:var(--darkred);color:var(--gold);border:1px solid var(--red);border-radius:6px;padding:8px 14px;cursor:pointer;font-family:inherit}
+.cal-top button:hover{background:var(--red)}
+#monthLabel{color:var(--gold);font-size:1.3rem}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-day{padding:10px 6px;text-align:center;border-radius:8px;background:rgba(90,15,15,.25);border:1px solid rgba(163,22,29,.45);min-height:58px;font-size:.95rem}
+.cal-head{background:transparent;border:none;color:var(--orange);font-weight:bold;min-height:auto}
+.cal-day.today{border-color:var(--gold);box-shadow:0 0 12px rgba(255,207,107,.45)}
+.cal-day.event{background:rgba(179,18,27,.45);border-color:var(--gold)}
+.cal-day.empty{background:transparent;border-color:transparent}
+.event-list{margin-top:18px;font-size:.95rem}
+.event-list li{margin-bottom:6px}
+
+/* Notizen */
+.note-area{width:100%;min-height:180px;background:rgba(20,4,4,.85);color:#f3e2c7;border:1px solid var(--darkred);border-radius:10px;padding:16px;font-family:inherit;font-size:1rem;resize:vertical}
+.note-actions{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.note-status{margin-top:10px;color:var(--gold);font-size:.9rem}
+footer{text-align:center;padding:30px 20px;color:#c9a184;border-top:2px solid var(--darkred);background:#0d0202}
+@media(max-width:600px){.cal-day{min-height:46px;font-size:.8rem}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>The Buffed Suvivers</h1>
+<p>Eine WoW-Gilde für lustiges Zusammensein, gemeinsame Abenteuer und wöchentliche Events.</p>
+<a class="btn" href="https://discord.gg/dqnwmPDDv" target="_blank" rel="noopener">Jetzt auf Discord joinen</a>
+</header>
+
+<nav>
+<a href="#ueber">Über uns</a>
+<a href="#chars">Charaktere</a>
+<a href="#events">Events &amp; Raids</a>
+<a href="#kalender">Kalender</a>
+<a href="#notizen">Notizen</a>
+<a href="#regeln">Regeln</a>
+<a href="#kontakt">Kontakt</a>
+</nav>
+
+<main>
+<section id="ueber">
+<h2>Über uns</h2>
+<p><strong>The Buffed Suvivers</strong> ist eine lockere World-of-Warcraft-Gilde aus Österreich. Bei uns steht der Spaß an erster Stelle: gemeinsam spielen, lachen, Dungeons und Raids erleben – ohne Stress und ohne Druck.</p>
+<p>Egal ob du neu im Spiel bist oder schon lange dabei: Du bist herzlich willkommen.</p>
+</section>
+
+<section id="chars">
+<h2>Unsere Helden</h2>
+<p>Hier sind ein paar stylische WoW-Charaktere, die die Stimmung unserer Gilde verkörpern.</p>
+<div class="chars">
+<div class="char">
+<img src="https://render.worldofwarcraft.com/eu/character/placeholder/placeholder-main.jpg" alt="WoW Krieger">
+<div class="char-info"><h3>Ork-Krieger</h3><span>Für die Horde – Stärke, Ehre und rohe Wut.</span></div>
+</div>
+<div class="char">
+<img src="https://render.worldofwarcraft.com/eu/character/placeholder/placeholder-main.jpg" alt="WoW Magier">
+<div class="char-info"><h3>Blutelf-Magier</h3><span>Arkane Macht, Eleganz und explosive Zauber.</span></div>
+</div>
+<div class="char">
+<img src="https://render.worldofwarcraft.com/eu/character/placeholder/placeholder-main.jpg" alt="WoW Jäger">
+<div class="char-info"><h3>Tauren-Jäger</h3><span>Mit treuem Begleiter durch ganz Azeroth.</span></div>
+</div>
+<div class="char">
+<img src="https://render.worldofwarcraft.com/eu/character/placeholder/placeholder-main.jpg" alt="WoW Paladin">
+<div class="char-info"><h3>Mensch-Paladin</h3><span>Licht, Schild und unerschütterlicher Mut.</span></div>
+</div>
+</div>
+<p style="margin-top:14px;font-size:.9rem;color:#d8b58d">Tipp: Du kannst die Bild-Links später durch echte Screenshots oder Charakterbilder aus deinem Spiel ersetzen.</p>
+</section>
+
+<section id="events">
+<h2>Events &amp; Raids</h2>
+<p>Wir veranstalten <strong>jede Woche Events und Raids</strong>. Gemeinsam erkunden wir Instanzen, sammeln Beute, versuchen neue Inhalte und haben dabei vor allem Spaß.</p>
+<div class="cards">
+<div class="card"><h3>Wöchentliche Raids</h3><p>Gemeinsame Raidabende für alle, die Lust auf Bosskämpfe und epische Momente haben.</p></div>
+<div class="card"><h3>Dungeons &amp; Events</h3><p>Mythic-Runs, Transmog-Jagden, PvP-Abende, Sammelaktionen und spontane Gildenaktivitäten.</p></div>
+<div class="card"><h3>Community</h3><p>Rede, Hilfe und gute Laune – unsere Discord-Community ist rund um die Uhr erreichbar.</p></div>
+</div>
+</section>
+
+<section id="kalender">
+<h2>Gilden-Kalender</h2>
+<div class="cal-top">
+<button id="prevMonth">&laquo; Zurück</button>
+<div id="monthLabel"></div>
+<button id="nextMonth">Weiter &raquo;</button>
+</div>
+<div class="cal-grid" id="calendar"></div>
+<div class="event-list">
+<h3>Fixe Termine</h3>
+<ul>
+<li><strong>Mittwoch:</strong> Gilden-Event / Dungeon-Abend</li>
+<li><strong>Freitag:</strong> Raid-Nacht</li>
+<li><strong>Sonntag:</strong> Chill- &amp; PvP-Abend</li>
+</ul>
+</div>
+</section>
+
+<section id="notizen">
+<h2>Gilden-Notizblock</h2>
+<p>Schreibe hier Raid-Ziele, Loot-Wünsche, Ideen oder wichtige Infos. Deine Notizen werden lokal in deinem Browser gespeichert.</p>
+<textarea id="noteArea" class="note-area" placeholder="z. B. Nächster Raid: Freitag 20:00 Uhr – Bufffood mitbringen!"></textarea>
+<div class="note-actions">
+<button class="btn" id="saveNote">Notiz speichern</button>
+<button class="btn" id="clearNote">Notiz löschen</button>
+</div>
+<div class="note-status" id="noteStatus"></div>
+</section>
+
+<section id="regeln">
+<h2>Unsere Regel</h2>
+<p><strong>Jeder darf alles machen.</strong></p>
+<p>Wir möchten eine entspannte Gilde sein, in der jeder spielen kann, wie er oder sie möchte. Respekt, Fairness und ein freundlicher Umgang bleiben natürlich die Basis für gutes Zusammenspiel.</p>
+</section>
+
+<section id="kontakt">
+<h2>Kontakt &amp; Join</h2>
+<p>Du möchtest Teil von <strong>The Buffed Suvivers</strong> werden? Dann komm einfach auf unseren Discord-Server:</p>
+<p><a class="btn" href="https://discord.gg/dqnwmPDDv" target="_blank" rel="noopener">Discord beitreten</a></p>
+<p>Standort: Österreich</p>
+</section>
+</main>
+
+<footer>
+<p>© 2026 The Buffed Suvivers – WoW-Gilde für lustiges Zusammensein</p>
+</footer>
+
+<script>
+// Kalender
+const monthNames=["Jänner","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+let current=new Date();
+function renderCalendar(){
+  const cal=document.getElementById("calendar");
+  const y=current.getFullYear(),m=current.getMonth();
+  document.getElementById("monthLabel").textContent=monthNames[m]+" "+y;
+  cal.innerHTML="";
+  ["Mo","Di","Mi","Do","Fr","Sa","So"].forEach(d=>{
+    const el=document.createElement("div");el.className="cal-day cal-head";el.textContent=d;cal.appendChild(el);
+  });
+  const first=new Date(y,m,1);
+  let offset=(first.getDay()+6)%7;
+  for(let i=0;i<offset;i++){const el=document.createElement("div");el.className="cal-day empty";cal.appendChild(el);}
+  const days=new Date(y,m+1,0).getDate();
+  const today=new Date();
+  for(let d=1;d<=days;d++){
+    const el=document.createElement("div");el.className="cal-day";el.textContent=d;
+    const wd=(new Date(y,m,d).getDay()+6)%7;
+    if(wd===2||wd===4||wd===6)el.classList.add("event");
+    if(d===today.getDate()&&m===today.getMonth()&&y===today.getFullYear())el.classList.add("today");
+    cal.appendChild(el);
+  }
+}
+document.getElementById("prevMonth").onclick=()=>{current.setMonth(current.getMonth()-1);renderCalendar();};
+document.getElementById("nextMonth").onclick=()=>{current.setMonth(current.getMonth()+1);renderCalendar();};
+renderCalendar();
+
+// Notizen
+const noteArea=document.getElementById("noteArea");
+const noteStatus=document.getElementById("noteStatus");
+noteArea.value=localStorage.getItem("buffedNotes")||"";
+document.getElementById("saveNote").onclick=()=>{
+  localStorage.setItem("buffedNotes",noteArea.value);
+  noteStatus.textContent="Notiz gespeichert!";
+  setTimeout(()=>noteStatus.textContent="",2500);
+};
+document.getElementById("clearNote").onclick=()=>{
+  if(confirm("Notiz wirklich löschen?")){noteArea.value="";localStorage.removeItem("buffedNotes");noteStatus.textContent="Notiz gelöscht.";}
+};
+</script>
+</body>
+</html>
